@@ -20,5 +20,8 @@
   "homepage": "https://github.com/unhang/h-chain#readme",
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1"
   }
 }
