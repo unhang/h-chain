@@ -4,10 +4,10 @@ const Block = require("./Block");
 // console.log(block.toString());
 // console.log(Block.genesisBlock().toString());
 
-const genesisBlock = Block.genesisBlock();
+const genesisBlock = Block.genesis();
 
 console.log(genesisBlock.toString());
 
-const fooBlock = Block.mineBlock(Block.genesisBlock(), "foo");
+const fooBlock = Block.mineBlock(Block.genesis(), "foo");
 
 console.log(fooBlock.toString());

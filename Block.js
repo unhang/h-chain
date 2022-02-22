@@ -16,7 +16,7 @@ class Block {
       data     : ${this.data}`;
   }
 
-  static genesisBlock() {
+  static genesis() {
     const timeStamp = Date.now();
     return new this(timeStamp, "-----", Block.hash(timeStamp, "-----", []), []);
   }
