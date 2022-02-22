@@ -8,6 +8,6 @@ const genesisBlock = Block.genesis();
 
 console.log(genesisBlock.toString());
 
-const fooBlock = Block.mineBlock(Block.genesis(), "foo");
+const fooBlock = Block.mineBlock(genesisBlock, "foo");
 
 console.log(fooBlock.toString());
