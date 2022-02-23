@@ -2,7 +2,7 @@ const Block = require("./Block");
 
 describe("Block", () => {
   let data, lastBlock, block;
-  beforeEch(() => {
+  beforeEach(() => {
     data = "bar";
     lastBlock = Block.genesis();
     block = Block.mineBlock(lastBlock, data);
