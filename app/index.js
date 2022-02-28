@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const BlockChain = require("../blockchain");
 
 const HTTP_PORT = process.env.HTTP_PORT || 3001;

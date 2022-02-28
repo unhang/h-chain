@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --watchAll",
     "dev-test": "nodemon dev-test.js",
-    "start": "node ./app/index.js"
+    "start": "node ./app",
+    "dev": "nodemon ./app"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "body-parser": "^1.19.2",
     "crypto-js": "^4.1.1",
     "express": "^4.17.3"
   }
