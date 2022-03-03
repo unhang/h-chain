@@ -27,6 +27,7 @@
   "dependencies": {
     "body-parser": "^1.19.2",
     "crypto-js": "^4.1.1",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "ws": "^8.5.0"
   }
 }
