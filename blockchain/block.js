@@ -17,8 +17,8 @@ class Block {
   }
 
   static genesis() {
-    const timeStamp = Date.now();
-    return new this(timeStamp, "-----", Block.hash(timeStamp, "-----", []), []);
+    const timeStamp = "Genesis Time";
+    return new this(timeStamp, "-----", "abc-xzy", []);
   }
 
   static mineBlock(lastBlock, data) {

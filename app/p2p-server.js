@@ -29,14 +29,24 @@ class P2PServer {
     console.log("Socket connected");
 
     this.handleMessage(socket);
-    socket.send(JSON.stringify(this.blockchain.chain));
+    this.sendChain(socket);
   }
 
   handleMessage(socket) {
     socket.on("message", (message) => {
       const data = JSON.parse(message);
-      console.log({ data });
+      console.log(data);
+      this.blockchain.replaceChain(data);
     });
+  }
+
+  sendChain(socket) {
+    socket.send(JSON.stringify(this.blockchain.chain));
+  }
+
+  // send the updated blockchain instance to all peers
+  syncChains() {
+    this.sockets.forEach((socket) => this.sendChain(socket));
   }
 }
 
