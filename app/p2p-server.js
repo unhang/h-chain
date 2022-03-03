@@ -27,6 +27,16 @@ class P2PServer {
   connectSocket(socket) {
     this.sockets.push(socket);
     console.log("Socket connected");
+
+    this.handleMessage(socket);
+    socket.send(JSON.stringify(this.blockchain.chain));
+  }
+
+  handleMessage(socket) {
+    socket.on("message", (message) => {
+      const data = JSON.parse(message);
+      console.log({ data });
+    });
   }
 }
 
