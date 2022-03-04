@@ -1,40 +1,53 @@
 const SHA256 = require("crypto-js/sha256");
 
+const DIFFICULTY = 4;
 class Block {
-  constructor(timeStamp, lastHash, hash, data) {
-    this.timeStamp = timeStamp;
+  constructor(timestamp, lastHash, hash, data, nonce) {
+    this.timestamp = timestamp;
     this.lastHash = lastHash;
     this.hash = hash;
     this.data = data;
+    this.nonce = nonce;
   }
 
   toString() {
     return `Block -
-      Timestamp: ${this.timeStamp}
+      Timestamp: ${this.timestamp}
       Last Hash: ${this.lastHash}
       Hash     : ${this.hash}
-      data     : ${this.data}`;
+      Nonce    : ${this.nonce}
+      Data     : ${this.data}`;
   }
 
   static genesis() {
-    const timeStamp = "Genesis Time";
-    return new this(timeStamp, "-----", "abc-xzy", []);
+    const timestamp = "Genesis Time";
+    return new this(timestamp, "-----", "abc-xzy", [], 0);
   }
 
   static mineBlock(lastBlock, data) {
-    const timestamp = Date.now();
     const lastHash = lastBlock.hash;
-    const hash = Block.hash(timestamp, lastBlock.hash, data);
-    return new this(timestamp, lastHash, hash, data);
+    let hash;
+    let timestamp;
+    let nonce = 0;
+
+    do {
+      nonce++;
+      timestamp = Date.now();
+      console.log({ timestamp });
+      hash = Block.hash(timestamp, lastBlock.hash, data, nonce);
+      console.log(hash.substring(0, DIFFICULTY));
+    } while (hash.substring(0, DIFFICULTY) !== "0".repeat(DIFFICULTY));
+
+    return new this(timestamp, lastHash, hash, data, nonce);
   }
 
-  static hash(timestamp, lastHash, data) {
-    return SHA256(`${timestamp}${lastHash}${data}`).toString();
+  static hash(timestamp, lastHash, data, nonce) {
+    return SHA256(`${timestamp}${lastHash}${data}${nonce}`).toString();
   }
 
   static hashBlock(block) {
-    const { timeStamp, lastHash, data } = block;
-    return Block.hash(timeStamp, lastHash, data);
+    const { timestamp, lastHash, data, nonce } = block;
+    return Block.hash(timestamp, lastHash, data, nonce);
   }
 }
 
