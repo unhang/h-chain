@@ -16,6 +16,10 @@ class ChainUtil {
   static id() {
     return uuidV1();
   }
+
+  static verifyTransaction(publicKey, signature, hashData) {
+    return ec.keyFromPublic(publicKey, "hex").verify(hashData, signature);
+  }
 }
 
 module.exports = ChainUtil;

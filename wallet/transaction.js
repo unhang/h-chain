@@ -7,6 +7,29 @@ class Transaction {
     this.outputs = [];
   }
 
+  update(senderWallet, recipient, amount) {
+    const senderOutput = this.transaction.outputs.find(
+      (output) => output.address === senderWallet.publicKey
+    );
+
+    if (!senderOutput) {
+      console.log("Sender Wallet not found");
+      return;
+    }
+    if (amount > senderOutput.amount) {
+      console.log(`Amount: ${amount} exceeds balance;`);
+      return;
+    }
+
+    senderOutput.amount = senderOutput.amount - amount;
+
+    transaction.outputs.push({ amount, address: recipient });
+    // because we updated the transaction, so the input with signature is no longer valid
+    // should create new signature
+    Transaction.signTransaction(this, senderWallet);
+    return this;
+  }
+
   static newTransaction(senderWallet, recipient, amount) {
     transaction = new this();
 
@@ -32,6 +55,14 @@ class Transaction {
       address: senderWallet.publicKey,
       signature: senderWallet.sign(transaction.outputs)
     };
+  }
+
+  static verifyTransaction(transaction) {
+    return ChainUtil.verifyTransaction(
+      transaction.input.address,
+      transaction.input.signature,
+      ChainUtil.hash(transaction.outputs)
+    );
   }
 }
 
