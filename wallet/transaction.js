@@ -8,7 +8,7 @@ class Transaction {
   }
 
   update(senderWallet, recipient, amount) {
-    const senderOutput = this.transaction.outputs.find(
+    const senderOutput = this.outputs.find(
       (output) => output.address === senderWallet.publicKey
     );
 
@@ -23,7 +23,7 @@ class Transaction {
 
     senderOutput.amount = senderOutput.amount - amount;
 
-    transaction.outputs.push({ amount, address: recipient });
+    this.outputs.push({ amount, address: recipient });
     // because we updated the transaction, so the input with signature is no longer valid
     // should create new signature
     Transaction.signTransaction(this, senderWallet);
@@ -31,7 +31,7 @@ class Transaction {
   }
 
   static newTransaction(senderWallet, recipient, amount) {
-    transaction = new this();
+    let transaction = new this();
 
     if (senderWallet.balance < amount) {
       console.log(`Amount: ${amount} exceeds balance;`);
@@ -46,6 +46,8 @@ class Transaction {
         { amount, address: recipient }
       ]
     );
+    Transaction.signTransaction(transaction, senderWallet);
+    return transaction;
   }
 
   static signTransaction(transaction, senderWallet) {

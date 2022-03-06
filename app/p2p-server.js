@@ -5,8 +5,14 @@ const peers = process.env.PEERS ? process.env.PEERS.split(",") : [];
 // a peer is an address, look like ws://localhost:12345
 
 class P2PServer {
-  constructor(blockchain) {
+  /**
+   *
+   * @param {*} blockchain
+   * @param {*} transactionPool
+   */
+  constructor(blockchain, transactionPool) {
     this.blockchain = blockchain;
+    this.transactionPool = transactionPool;
     this.sockets = [];
   }
 
