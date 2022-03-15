@@ -28,10 +28,12 @@ app.post("/mine", (req, res) => {
 });
 
 app.get("/transactions", (req, res) => res.json(tp.transactions));
+
 app.post("/transaction", (req, res) => {
   const { recipient, amount } = req.body;
   let transaction = wallet.createTransaction(recipient, amount, tp);
   console.log(transaction);
+  p2pServer.broadcastTransaction(transaction);
   res.redirect("/transactions");
 });
 
