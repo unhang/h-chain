@@ -66,7 +66,7 @@ class P2PServer {
   }
 
   sendTransaction(socket, transaction) {
-    console.log(data);
+    console.log("-----");
     socket.send(
       JSON.stringify({
         type: MESSAGE_TYPES.transaction,
@@ -81,6 +81,7 @@ class P2PServer {
   }
 
   broadcastTransaction(transaction) {
+    console.log(this.sockets);
     this.sockets.forEach((socket) => this.sendTransaction(socket, transaction));
   }
 }

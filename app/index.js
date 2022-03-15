@@ -5,6 +5,7 @@ const P2PServer = require("./p2p-server");
 const Wallet = require("../wallet");
 const TransactionPool = require("../wallet/transaction-pool");
 const Transaction = require("../wallet/transaction");
+const { json } = require("express/lib/response");
 
 const HTTP_PORT = process.env.HTTP_PORT || 3001;
 
@@ -29,10 +30,11 @@ app.post("/mine", (req, res) => {
 
 app.get("/transactions", (req, res) => res.json(tp.transactions));
 
+app.get("/public-key", (req, res) => res.json(wallet.publicKey));
+
 app.post("/transaction", (req, res) => {
   const { recipient, amount } = req.body;
   let transaction = wallet.createTransaction(recipient, amount, tp);
-  console.log(transaction);
   p2pServer.broadcastTransaction(transaction);
   res.redirect("/transactions");
 });
