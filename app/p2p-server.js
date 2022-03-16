@@ -4,7 +4,8 @@ const P2P_PORT = process.env.P2P_PORT || 5001;
 const peers = process.env.PEERS ? process.env.PEERS.split(",") : [];
 const MESSAGE_TYPES = {
   chain: "CHAIN",
-  transaction: "TRANSACTION"
+  transaction: "TRANSACTION",
+  clear_transactions: "CLEAR_TRANSACTIONS"
 };
 // a peer is an address, look like ws://localhost:12345
 
@@ -52,6 +53,9 @@ class P2PServer {
         case MESSAGE_TYPES.transaction:
           this.transactionPool.updateOrAddTransaction(data.transaction);
           break;
+        case MESSAGE_TYPES.clear_transactions:
+          this.transactionPool.clear();
+          break;
       }
     });
   }
@@ -83,6 +87,12 @@ class P2PServer {
   broadcastTransaction(transaction) {
     console.log(this.sockets);
     this.sockets.forEach((socket) => this.sendTransaction(socket, transaction));
+  }
+
+  broadcastClearTransactions() {
+    this.sockets.forEach((socket) =>
+      socket.send(JSON.stringify({ type: MESSAGE_TYPES.clear_transactions }))
+    );
   }
 }
 
