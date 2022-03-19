@@ -40,7 +40,7 @@ class P2PServer {
     console.log("Socket connected");
 
     this.handleMessage(socket);
-    this.sendChain(socket);
+    this.syncChains(socket);
   }
 
   handleMessage(socket) {

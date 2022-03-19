@@ -22,7 +22,7 @@ class TransactionPool {
     return this.transactions.find((t) => t.input.address === address);
   }
 
-  validTransaction() {
+  validTransactions() {
     return this.transactions.filter((transaction) => {
       const totalAmount = transaction.outputs.reduce(
         (total, output) => total + output.amount,

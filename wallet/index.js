@@ -10,6 +10,8 @@ class Wallet {
     this.publicKey = this.keyPair.getPublic().encode("hex");
   }
 
+  calculateBalance(blockchain) {}
+
   toString() {
     return `Wallet
     publicKey  : ${this.publicKey}
@@ -27,7 +29,7 @@ class Wallet {
       return;
     }
 
-    let transaction = transactionPool.existingTransaction(this.publicKey);
+    let transaction = transactionPool.existingTransactions(this.publicKey);
 
     if (transaction) {
       transaction.update(this, recipient, amount);

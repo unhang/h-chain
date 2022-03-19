@@ -22,16 +22,16 @@ app.get("/blocks", (req, res, next) => {
   res.status(200).json(bc.chain);
 });
 
-app.post("/mine", (req, res) => {
-  const block = bc.addBlock(req.body.data);
-  console.log(`New Block added: ${block.toString()}`);
-  p2pServer.syncChains();
-  res.redirect("/blocks");
-});
+// app.post("/mine", (req, res) => {
+//   const block = bc.addBlock(req.body.data);
+//   console.log(`New Block added: ${block.toString()}`);
+//   p2pServer.syncChains();
+//   res.redirect("/blocks");
+// });
 
 app.get("/transactions", (req, res) => res.json(tp.transactions));
 
-app.get("/mine-transaction", (req, res) => {
+app.get("/mine-transactions", (req, res) => {
   const block = miner.mine();
   console.log(`New block added: ${block.toString()}`);
   res.redirect("/blocks");
